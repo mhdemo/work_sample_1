@@ -3,10 +3,8 @@ title: "Arlington County Traffic Summons and Parking Citation Analysis"
 author: "Matthew Harris"
 date: 11/25/2018
 output:
-  html_document:
+  github_document:
     toc: TRUE
-    toc_float:
-      collapsed: FALSE
 ---
 
 ```{r setup, include=FALSE}
