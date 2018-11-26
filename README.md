@@ -30,7 +30,7 @@ Analysis Goals
 
 Parking citations are never fun, but analyzing them could be. In this exploratory analysis I will examine the data to determine what types of citations are recorded the most, and if there are any discernable patterns over different timeframes. I will refer to both parking citations and traffic summons as citations for the remainder of the analysis. It is important to note that since this data was only collected on vehicles that received citations I have no means of accurately predicting the probability of future outcomes.
 
-This project will also include a Shiny application that will allow users to filter and segment the data without having to interact with the underlying code. Feel free to play with the application first and return to this document to see my process of cleaning and analyzing the data. [Shiny Application]()
+This project will also include a Shiny application that will allow users to filter and segment the data without having to interact with the underlying code. Feel free to play with the application first and return to this document to see my process of cleaning and analyzing the data. [Shiny Application](https://mhdemo7.shinyapps.io/Citation_Analysis_Shiny/)
 
 Lets dig in :)
 
@@ -331,9 +331,9 @@ citation_data %>%
 Alternate Visualization Methods
 -------------------------------
 
-So far I have created tables and visualizations that are based on particular criteria. There are numerous ways to slice this data set within R but having dynamic plots would make my exploratory analysis easier. I can share my findings by creating a Shiny application that anyone can be utilized by anyone, regardless of their experience with R.<br /> [Shiny Application]()
+So far I have created tables and visualizations that are based on particular criteria. There are numerous ways to slice this data set within R but having dynamic plots would make my exploratory analysis easier. I can share my findings by creating a Shiny application that anyone can be utilized by anyone, regardless of their experience with R.<br /> [Shiny Application](https://mhdemo7.shinyapps.io/Citation_Analysis_Shiny/)
 
 ``` r
 rm(address_na)
-save.image(file = "Processed Data/citation_data_tidy.RData")
+save.image(file = "citation_data_tidy.RData")
 ```
