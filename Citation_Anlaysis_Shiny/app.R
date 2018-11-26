@@ -8,11 +8,10 @@ library(DT)
 
 load("Processed Data/citation_data_tidy.RData")
 
-ui <- fluidPage(
+ui <- fluidPage(theme = shinytheme("yeti"),
    
    # Application title
    #titlePanel("Citation Analysis"),
-   
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
       sidebarPanel(
@@ -20,9 +19,13 @@ ui <- fluidPage(
                      "Citation Type:",
                      choices = citation_data %>% pull(ticketchargedescription) %>% unique() %>% sort(),
                      multiple = TRUE,
-                     selected = "")
+                     selected = ""),
+         tags$div(class="header", checked=NA,
+                  tags$p("The data and code used to create this application can be found in my Github repository.
+                         It also contains the documents detailing my original analysis."),
+                  tags$a(href="https://github.com/mhdemo/work_sample_1", "Github")
+         )
       ),
-      
       # Show a plot of the generated distribution
       mainPanel(
          tabsetPanel(type = "tabs",
@@ -46,8 +49,10 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-  citation_reactive <- reactive({ citation_data %>%
-                                    filter(ticketchargedescription %in% input$citation_type) })
+  citation_reactive <- reactive({ 
+    req(input$citation_type)
+    citation_data %>%
+      filter(ticketchargedescription %in% input$citation_type) })
 
   output$citation_hour <- renderPlot({
     
