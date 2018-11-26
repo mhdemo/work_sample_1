@@ -7,7 +7,6 @@ library(shinythemes)
 library(DT)
 
 load("citation_data_tidy.RData")
-
 ui <- fluidPage(theme = shinytheme("yeti"),
    
    # Application title
