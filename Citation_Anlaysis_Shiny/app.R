@@ -6,7 +6,7 @@ library(shiny)
 library(shinythemes)
 library(DT)
 
-load("Processed Data/citation_data_tidy.RData")
+load("citation_data_tidy.RData")
 
 ui <- fluidPage(theme = shinytheme("yeti"),
    
