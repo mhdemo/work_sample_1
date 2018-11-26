@@ -28,11 +28,11 @@ This will be used as a sample to display some of my analytical capabilities in R
 Analysis Goals
 --------------
 
-Parking citations are never fun, but analyzing them could be. In this exploratory analysis I will examine the data to determine what types of citations are recorded the most, and if there are any discernable patterns over different timeframes. I will refer to both parking citations and traffic summons as citations for the remainder of the analysis. It is important to note that since this data was only collected on vehicles that received citations I have no means of accurately predicting the probability of future outcomes.
+Parking citations are never fun, but analyzing them could be. In this exploratory analysis I will examine the data to determine what types of citations are recorded the most, and if there are any discernible patterns over different time frames. I will refer to both parking citations and traffic summons as citations for the remainder of the analysis. It is important to note that since this data was only collected on vehicles that received citations I have no means of accurately predicting the probability of future outcomes.
 
 This project will also include a Shiny application that will allow users to filter and segment the data without having to interact with the underlying code. Feel free to play with the application first and return to this document to see my process of cleaning and analyzing the data. [Shiny Application](https://mhdemo7.shinyapps.io/Citation_Analysis_Shiny/)
 
-Lets dig in :)
+Let's dig in :)
 
 Data Sources
 ------------
@@ -79,7 +79,7 @@ summary(citation_data)
 
 ### Data Type Updates
 
-The first thing that stands out is that the `TicketDateTime` variable is classified as `character`. I will need to change that variable to be classified as `POSIXct` in order to determine when certain events occured. I will also change all variables names to lower case.
+The first thing that stands out is that the `TicketDateTime` variable is classified as `character`. I will need to change that variable to be classified as `POSIXct` in order to determine when certain events occurred. I will also change all variables names to lower case.
 
 ``` r
 citation_data %>%
@@ -116,7 +116,7 @@ citation_data %>%
     ##            <int>                   <int>   <int>    <int>  <int>
     ## 1              0                       0   23536    99269      0
 
-There appears to be a lot of missing data for the `address` and `location` variables. The dataset is still viable for analysis as the other variables don't caontain NAs. I can also see from the `str` function that the `address` variable contains street addresses. The first couple of `location` oberservations are NA so I will need to use a differemt summary operation to see what this variable holds.
+There appears to be a lot of missing data for the `address` and `location` variables. The data set is still viable for analysis as the other variables don't contain NAs. I can also see from the `str` function that the `address` variable contains street addresses. The first couple of `location` observations are NA so I will need to use a different summary operation to see what this variable holds.
 
 ``` r
 citation_data %>%
@@ -176,12 +176,12 @@ summary(citation_data)
     ##                                       
     ## 
 
-The obeservations appears to have occured over alomst an entire calendar year. Hopefully this will allow me to determine if there were any seasonal patterns that occured in that timeframe.
+The observations appears to have occurred over almost an entire calendar year. Hopefully this will allow me to determine if there were any seasonal patterns that occurred in that time frame.
 
 Data Transformation
 -------------------
 
-My next step is to create new variables to examine the data at different timeframes other than an exact date and time.
+My next step is to create new variables to examine the data at different time frames other than an exact date and time.
 
 ``` r
 citation_data %>%
@@ -197,7 +197,7 @@ Now that the data has been cleaned and transformed I can begin to answer some of
 
 ### Top Citations
 
-The first block of code below tells me that there are 254 different citation types recorded. With that many unique types I decided to filter the data for the top 7 in term of number of citations recorded. Expired meter citations make up nearly 32% of the whole dataset with safety inspection violations coming in at second with a little over 7%. It's clear that expired meter citations are the bread and butter of Arlington County traffic police. Further analysis can be done to determine why these are so much more common.
+The first block of code below tells me that there are 254 different citation types recorded. With that many unique types I decided to filter the data for the top 7 in term of number of citations recorded. Expired meter citations make up nearly 32% of the whole data set with safety inspection violations coming in at second with a little over 7%. It's clear that expired meter citations are the bread and butter of Arlington County traffic police. Further analysis can be done to determine why these are so much more common.
 
 ``` r
 citation_data %>%
@@ -265,7 +265,7 @@ A quick glance at the graph shows us that citations seem to spike around 10:00 A
 
 ### Citation Locations - Missing Data
 
-Lets now examine where the citations were given the most. We learned ealrier that there are 23,536 observations that don't include `address` data. We can examine this data first to determine a reason for these missing data points.
+Lets now examine where the citations were given the most. We learned earlier that there are 23,536 observations that don't include `address` data. We can examine this data first to determine a reason for these missing data points.
 
 ``` r
 citation_data %>%
@@ -293,7 +293,7 @@ address_na
     ## 10 TRAFFIC: FAIL TO STOP/YIELD                 <NA>      583  0.0248
     ## # ... with 202 more rows
 
-A quick summary function shows us that 72% of the NA location observations are related to speeding and traffic related citations. It's likely that the officers giving out the citations didn't have time to record where they occured. Either way we now know that none of the top citation types are missing `address` data.
+A quick summary function shows us that 72% of the NA location observations are related to speeding and traffic related citations. It's likely that the officers giving out the citations didn't have time to record where they occurred. Either way we now know that none of the top citation types are missing `address` data.
 
 ### Citation Locations - Most Common
 
@@ -324,7 +324,7 @@ citation_data %>%
     ## 10 3200 FAIRFAX DR.       561 0.00565
     ## # ... with 8,439 more rows
 
-1400 COURTHOUSE RD N is the address with the most citations. A quick Google Maps search lets us know that a large parking lot is located at that address. I could also use the `ggmap` package to automate this address lookup process, but recent changes to Google's Maps Static API have made that difficult.
+1400 COURTHOUSE RD N is the address with the most citations. A quick Google Maps search lets us know that a large parking lot is located at that address. I could also use the `ggmap` package to automate this address look-up process, but recent changes to Google's Maps Static API have made that difficult.
 
 ![](top_address.png)
 
