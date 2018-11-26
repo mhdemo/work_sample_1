@@ -8,14 +8,10 @@ library(DT)
 
 load("citation_data_tidy.RData")
 ui <- fluidPage(theme = shinytheme("yeti"),
-   
-   # Application title
-   #titlePanel("Citation Analysis"),
-   # Sidebar with a slider input for number of bins 
    sidebarLayout(
       sidebarPanel(
          selectInput("citation_type",
-                     "Citation Type:",
+                     "Citation Type(s):",
                      choices = citation_data %>% pull(ticketchargedescription) %>% unique() %>% sort(),
                      multiple = TRUE,
                      selected = ""),
@@ -29,17 +25,20 @@ ui <- fluidPage(theme = shinytheme("yeti"),
       mainPanel(
          tabsetPanel(type = "tabs",
                      tabPanel("Citations by Hour",
-                              plotOutput(outputId = "citation_hour", height = 700),
+                              plotOutput(outputId = "citation_hour"),
                               dataTableOutput(outputId = "table_hour")),
                      tabPanel("Citations by Day of the Week",
-                              plotOutput(outputId = "citation_weekday", height = 700),
+                              plotOutput(outputId = "citation_weekday"),
                               dataTableOutput(outputId = "table_weekday")),
                      tabPanel("Citations by Day of the Month",
-                              plotOutput(outputId = "citation_day", height = 700),
+                              plotOutput(outputId = "citation_day"),
                               dataTableOutput(outputId = "table_day")),
                      tabPanel("Citations by Month",
-                              plotOutput(outputId = "citation_month", height = 700),
-                              dataTableOutput(outputId = "table_month"))
+                              plotOutput(outputId = "citation_month"),
+                              dataTableOutput(outputId = "table_month")),
+                     tabPanel("Citations by Address (Top 5)",
+                              plotOutput(outputId = "citation_address"),
+                              dataTableOutput(outputId = "table_address"))
           )
       )
    )
@@ -122,6 +121,26 @@ server <- function(input, output) {
     datatable(citation_reactive() %>%
                 select(ticketdatetime, ticketchargedescription, address, source))
   })
+  
+  output$citation_address <- renderPlot({
+    
+    citation_reactive() %>%
+      group_by(address, ticketchargedescription) %>%
+      summarize(ticket_count = n()) %>%
+      ungroup() %>%
+      arrange(desc(ticket_count)) %>%
+      head(5) %>%
+      ggplot(aes(address, ticket_count, fill = factor(address))) + 
+      geom_col(position = "dodge") + scale_x_discrete() + labs(x = "Month", y = "Citation Count") +
+      scale_fill_discrete(name = "Address")
+    
+  })
+  
+  output$table_address <- DT::renderDataTable({
+    datatable(citation_reactive() %>%
+                select(ticketdatetime, ticketchargedescription, address, source))
+  })
+  
 }
 
 # Run the application 
