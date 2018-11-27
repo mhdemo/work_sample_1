@@ -18,7 +18,7 @@ Matthew Harris
     -   [Citation Distribution Over Time](#citation-distribution-over-time)
     -   [Citation Locations - Missing Data](#citation-locations---missing-data)
     -   [Citation Locations - Most Common](#citation-locations---most-common)
--   [Alternate Visualization Methods](#alternate-visualization-methods)
+-   [R Shiny Application](#r-shiny-application)
 
 Introduction
 ------------
@@ -328,8 +328,8 @@ citation_data %>%
 
 ![](top_address.png)
 
-Alternate Visualization Methods
--------------------------------
+R Shiny Application
+-------------------
 
 So far I have created tables and visualizations that are based on particular criteria. There are numerous ways to slice this data set within R but having dynamic plots would make my exploratory analysis easier. I can share my findings by creating a Shiny application that anyone can be utilized by anyone, regardless of their experience with R.<br /> [Shiny Application](https://mhdemo7.shinyapps.io/Citation_Analysis_Shiny/)
 
